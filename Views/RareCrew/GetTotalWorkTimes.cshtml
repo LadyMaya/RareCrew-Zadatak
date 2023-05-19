@@ -54,5 +54,55 @@
                 }
             </tbody>
         </table>
-    </div>   
+    </div>
+    <div>
+        <div style="float:right; width:39%">
+            <button style="margin:5px;" id="show-png">Toggle Png</button>
+            <div></div>
+            <div style="height:370px; width:100%; padding:10px; display: none;" id="png-container"></div>
+            <div></div>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<script type="text/javascript">
+    var data = @Html.Raw(ViewBag.EmployeeModelViews);
+    window.onload = function () {
+
+        let array = [];
+        let i;
+        for (i = 0; i < data.length; i++) {
+            array.push({
+                y: data[i].TotalTimePercents, label: data[i].Name
+            })
+        }
+        var chart = new CanvasJS.Chart("png-container", {
+            theme: "light1", // "light1", "light2", "dark1", "dark2"
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Total work time per employee",
+                fontSize: 25,
+                fontFamily: "tahoma",
+            },
+            data: [{
+                type: "pie",
+                startAngle: 25,
+                toolTipContent: "<b>{label}</b>: {y}%",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 16,
+                indexLabel: "{label} - {y}%",
+                dataPoints: array
+            }]
+        });
+        chart.render();
+    }
+
+    $(document).ready(function () {
+        $("#show-png").click(function () {
+            $("#png-container").toggle();
+        });
+    });
+</script>
