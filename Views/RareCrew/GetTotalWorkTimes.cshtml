@@ -1,0 +1,58 @@
+﻿@model IEnumerable<RareCrew.ModelView.EmployeeModelView>
+
+@{
+    ViewData["Title"] = "Total WorkT Times";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Total work times per employee</h1>
+<div>
+    <div style="margin:5px; width:60%;float:left">
+        <table class="table" style="margin:5px; width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TotalTime)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        if (item.TotalTimeInSeconds / 3600 < 100)
+                        {
+                            <tr style="background-color:red;">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td id="totalTime">
+
+                                    @Html.DisplayFor(modelItem => item.TotalTime)
+
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td id="totalTime">
+
+                                    @Html.DisplayFor(modelItem => item.TotalTime)
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>   
+</div>
